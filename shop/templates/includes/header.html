@@ -1,0 +1,84 @@
+<header>
+    <!-- TOP HEADER -->
+    <div id="top-header">
+        <div class="container">
+            <ul class="header-links pull-right">
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'profile' %}"><i class="fa fa-user-o"></i> Мой профиль</a></li>
+                <li><a href="{% url 'profile_orders' %}"><i class="fa fa-shopping-bag"></i> Мои заказы</a></li>
+                <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Выход</a></li>
+                {% else %}
+                <li><a href="{% url 'signin' %}"><i class="fa fa-sign-in"></i> Вход</a></li>
+                <li><a href="{% url 'signup' %}"><i class="fa fa-registered"></i> Регистрация</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <!-- /TOP HEADER -->
+
+    <!-- MAIN HEADER -->
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a href="{% url 'index' %}" class="logo">
+                            <img src="/static/img/logo.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <!-- /LOGO -->
+
+                <!-- SEARCH BAR -->
+                <div class="col-md-7">
+                    <div class="header-search">
+                        <form method="post" action="{% url 'search' %}">
+                            <select class="input-select" name="category">
+                                <option value="">Все категории</option>
+                                {% for category in categories %}
+                                <option value="{{ category.slug }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <input class="input" placeholder="Поиск" name="q">
+                            <button class="search-btn">Найти</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- /SEARCH BAR -->
+
+                <!-- ACCOUNT -->
+                <div class="col-md-2 clearfix">
+                    <div class="header-ctn">
+
+                        <!-- Cart -->
+                        <div class="dropdown">
+                            <a href="{% url 'cart_detail' %}" class="dropdown-toggle">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Корзина</span>
+                                <div class="qty">{{ cart|length }}</div>
+                            </a>
+                        </div>
+                        <!-- /Cart -->
+
+                        <!-- Menu Toogle -->
+                        <div class="menu-toggle">
+                            <a href="">
+                                <i class="fa fa-bars"></i>
+                                <span>Меню</span>
+                            </a>
+                        </div>
+                        <!-- /Menu Toogle -->
+
+                    </div>
+                </div>
+                <!-- /ACCOUNT -->
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </div>
+    <!-- /MAIN HEADER -->
+</header>

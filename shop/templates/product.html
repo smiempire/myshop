@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- BREADCRUMB -->
+    {% include 'includes/breadcrumb.html' %}
+    <!-- /BREADCRUMB -->
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+
+                <!-- Product main img -->
+                <div class="col-md-5 col-md-push-2">
+                    <div id="product-main-img">
+                        {% for image in object.image.all %}
+                        <div class="product-preview">
+                            <img src="{{ image.image.large.url }}" alt="">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- /Product main img -->
+
+                <!-- Product thumb imgs -->
+                <div class="col-md-2  col-md-pull-5">
+                    <div id="product-imgs">
+                        {% for image in object.image.all %}
+                        <div class="product-preview">
+                            <img src="{{ image.image.large.url }}" alt="">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- /Product thumb imgs -->
+
+                <!-- Product details -->
+                <div class="col-md-5">
+                    <div class="product-details">
+                        <h1 class="product-name">{{ object.name }}</h1>
+                        <div>
+                            <h3 class="product-price">{{ object.price }}₽</h3>
+                            <span class="product-available">
+                                {% if object.is_available %}Есть в наличии{% else %}Нет в наличии{% endif %}
+                            </span>
+                        </div>
+                        <p>{% autoescape off %}{{ object.description }}{% endautoescape %}</p>
+
+                        <form action="{% url "cart_add" object.id %}" method="post">
+                            <div class="add-to-cart">
+                                <div class="qty-label">
+									<div class="input-number">
+										<input type="number" name="quantity" value="1">
+										<span class="qty-up">+</span>
+										<span class="qty-down">-</span>
+									</div>
+								</div>
+                                <input type="hidden" name="update" value="False" id="id_update">
+                                <button type="submit" class="add-to-cart-btn">
+                                    <i class="fa fa-shopping-cart"></i> добавить в корзину
+                                </button>
+                            </div>
+                        </form>
+
+                        <ul class="product-links">
+                            <li>Категории:</li>
+                            {% for category in object.category.all %}
+                            <li><a href="{% url 'category' category.slug %}">{{ category.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+
+                    </div>
+                </div>
+                <!-- /Product details -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Section -->
+    <div class="section">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="section-title text-center">
+                        <h3 class="title">Похожие продукты</h3>
+                    </div>
+                </div>
+
+                {% for product in related_products %}
+                <!-- product -->
+                <div class="col-md-3 col-xs-6">
+                    <div class="product">
+                        <div class="product-img">
+                            <a href="{% url 'product' product.pk %}">
+                                <img src="{{ product.image.first.image.medium.url }}" alt="">
+                            </a>
+                            {% if object.is_new %}
+                            <div class="product-label">
+                                <span class="new">Новинка</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="product-body">
+                            <p class="product-category">
+                                {% for category in product.category.all %}
+                                {{ category.name }}
+                                {% if not forloop.last %},{% endif %}
+                                {% endfor %}
+                            </p>
+                            <h3 class="product-name">
+                                <a href="{% url 'product' product.pk %}">{{ product.name }}</a>
+                            </h3>
+                            <h4 class="product-price">{{ product.price }}₽</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- /product -->
+                {% endfor %}
+
+            </div>
+        </div>
+        <br><br>
+    </div>
+    <!-- /Section -->
+
+{% endblock %}

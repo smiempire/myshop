@@ -1,0 +1,22 @@
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb-tree">
+                    <li><a href="{% url 'index' %}">Главная</a></li>
+                    <li>
+                        {% for category in object.category.all %}
+                        <a href="{% url 'category' category.slug %}">{{ category.name }}</a>
+                        {% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    </li>
+                    <li class="active">{{ object.name }}</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>

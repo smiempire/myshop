@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- SECTION -->
+    <div class="section" xmlns="http://www.w3.org/1999/html">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h1 class="title">Корзина</h1>
+                    </div>
+                </div>
+
+                <!-- Cart -->
+                <div>
+                    {% for item in cart %}
+                        {% with product=item.product %}
+                        <form action="{% url "cart_remove" product.id %}" method="post">
+                            <div class="cart-item">
+                                <button class="delete" type="submit" title="Удалить"><i class="fa fa-close"></i></button>
+                                <div class="cart-left">
+                                    <img src="{{ product.image.first.image.thumbnail.url }}" alt="">
+                                </div>
+                                <div class="cart-right">
+                                    <div class="cart-name">{{ product.name }}</div>
+                                    <div class="cart-price">{{ item.quantity }} x <span>{{ item.price }}₽</span></div>
+                                    <div class="cart-total-price">Сумма: <span>{{ item.total_price }}₽</span></div>
+                                </div>
+                            </div>
+                        </form>
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+                <div class="cart-all-price">
+                    Всего <span>{{ cart|length }}</span> товаров на сумму <span>{{ cart.get_total_price }}₽</span>
+                </div>
+                <div class="button-block">
+                    <a href="{% url 'order' %}" class="primary-btn order-submit">оформить заказ</a>
+                </div>
+                <!-- /Cart -->
+
+            </div>
+        </div>
+    </div>
+    <!-- /SECTION -->
+    <div class="indent"></div>
+
+{% endblock %}

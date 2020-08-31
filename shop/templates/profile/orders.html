@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- SECTION -->
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h1 class="title">Мои заказы</h1>
+                    </div>
+                </div>
+
+                <div class="col-md-12 order-details">
+                    <div class="order-summary">
+                        <div class="order-products">
+                            {% for order in orders %}
+                            <div class="order-col">
+                                <div>{{ order.created }}</div>
+                                <div>
+                                    <div><strong>{{ order.get_total_cost }}</strong></div>
+                                    <div>{{ order.get_status_display }}</div>
+                                </div>
+                            </div>
+                            <details>
+                                <summary>Подробнее</summary>
+                                {% for item in order.items.all %}
+                                <div class="order-col">
+                                    <div><a href="{% url 'product' item.product.pk %}"><strong>{{ item.product.name }}</strong></a></div>
+                                    <div>{{ item.quantity }} x <strong>{{ item.price }}</strong></div>
+                                </div>
+                                {% endfor %}
+                            </details><hr>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- /SECTION -->
+
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- SECTION -->
+    <div class="section">
+        <div class="container">
+            <form class="row" method="post">
+                {% csrf_token %}
+
+                <div class="col-md-7">
+                    <!-- Billing Details -->
+                    <div class="billing-details">
+                        <div class="section-title">
+                            <h3 class="title">Данные заказа</h3>
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="first_name" placeholder="Имя" required value="{{ request.user.first_name }}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="last_name" placeholder="Фамилия" required value="{{ request.user.last_name }}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="email" name="email" placeholder="Email" required value="{{ request.user.email }}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="city" placeholder="Город" required value="{{ request.user.userprofile.city }}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="address" placeholder="Адрес" required value="{{ request.user.userprofile.address }}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="postal_code" placeholder="Индекс" required value="{{ request.user.userprofile.postal_code }}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="tel" name="phone" placeholder="Телефон" required value="{{ request.user.userprofile.phone }}">
+                        </div>
+                    </div>
+                    <!-- /Billing Details -->
+
+                    <!-- Order notes -->
+                    <div class="order-notes">
+                        <textarea class="input" placeholder="Примечания к заказу" name="notes"></textarea>
+                    </div>
+                    <!-- /Order notes -->
+                </div>
+
+                <!-- Order Details -->
+                <div class="col-md-5 order-details">
+                    <div class="section-title text-center">
+                        <h3 class="title">Заказ</h3>
+                    </div>
+                    <div class="order-summary">
+                        <div class="order-col">
+                            <div><strong>Продукт</strong></div>
+                            <div><strong>Сумма</strong></div>
+                        </div>
+                        <div class="order-products">
+                            {% for item in cart %}
+                                {% with product=item.product %}
+                                <div class="order-col">
+                                    <div>{{ item.quantity }} x {{ product.name }}</div>
+                                    <div>{{ item.total_price }}</div>
+                                </div>
+                                {% endwith %}
+                            {% endfor %}
+
+                        </div>
+                        <div class="order-col">
+                            <div><strong>ИТОГО</strong></div>
+                            <div><strong class="order-total">{{ cart.get_total_price }}</strong></div>
+                        </div>
+                    </div>
+                    <button type="submit" class="primary-btn order-submit">Сдеать заказ</button>
+                </div>
+                <!-- /Order Details -->
+            </form>
+        </div>
+    </div>
+    <!-- /SECTION -->
+
+{% endblock %}

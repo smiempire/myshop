@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- SECTION -->
+    <div class="section">
+        <div class="container">
+            <form class="row" method="post">
+                {% csrf_token %}
+                <div class="col-md-7">
+                    <div class="billing-details">
+                        <div class="section-title">
+                            <h1 class="title">Профиль</h1>
+                            <div class="red-label">{% autoescape off %}{{ message }}{% endautoescape %}</div>
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="first_name" placeholder="Имя" required value="{{ request.user.first_name }}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="last_name" placeholder="Фамилия" required value="{{ request.user.last_name }}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="email" name="email" placeholder="Email" required value="{{ request.user.email }}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="city" placeholder="Город" value="{{ form.city.value }}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="address" placeholder="Адрес" value="{{ form.address.value }}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="postal_code" placeholder="Индекс" value="{{ form.postal_code.value }}">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="tel" name="phone" placeholder="Телефон" value="{{ form.phone.value }}">
+                        </div>
+                    </div>
+                    <button type="submit" class="primary-btn order-submit">Сохранить</button>
+                    <a href="#changePassword" data-toggle="modal" type="submit" class="primary-btn order-submit">Изменить пароль</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- /SECTION -->
+
+    <div class="modal fade" id="changePassword" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Изменить пароль</h4>
+                </div>
+                <div class="modal-body form-login">
+                    <form class="row" method="post" class="billing-details1111">
+                        {% csrf_token %}
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input class="input" type="password" name="old_password" placeholder="Старый пароль" required value="">
+                            </div>
+                            <div class="form-group">
+                                <input class="input" type="password" name="new_password1" placeholder="Новый пароль" required value="">
+                            </div>
+                            <div class="form-group">
+                                <input class="input" type="password" name="new_password2" placeholder="Подтверждение нового пароля" required value="">
+                            </div>
+                            <button type="submit" class="primary-btn order-submit">Изменить</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

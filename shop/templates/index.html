@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- SECTION -->
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h3 class="title">Новинки</h3>
+                    </div>
+                </div>
+                {% include 'includes/list.html' %}
+            </div>
+        </div>
+    </div>
+    <!-- /SECTION -->
+
+    <!-- SECTION -->
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h3 class="title">Популярные</h3>
+                    </div>
+                </div>
+                {% include "includes/list.html" with object_list=best_products %}
+            </div>
+        </div>
+    </div>
+    <!-- /SECTION -->
+    <div class="indent"></div>
+
+{% endblock %}

@@ -1,0 +1,7 @@
+Django==3.1
+psycopg2
+django-stdimage
+django-markupfield
+django-recaptcha2
+django-multi-captcha-admin
+django-ckeditor
